@@ -2,7 +2,9 @@ package com.ifixit.android.imagemanager;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.ref.SoftReference;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -221,7 +223,11 @@ public class ImageManager {
          addToWriteQueue(new StoredBitmap(bitmap, url));
 
          return bitmap;
-      } catch (Exception e) {
+      } catch (MalformedURLException e) {
+         Log.e("AndroidImageManager", "Failed loading bitmap", e);
+         return null;
+      } catch (IOException e) {
+         Log.e("AndroidImageManager", "Failed loading bitmap", e);
          return null;
       }
    }
