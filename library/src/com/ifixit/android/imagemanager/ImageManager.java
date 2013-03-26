@@ -211,15 +211,16 @@ public class ImageManager {
       String filename = getFileName(url);
       File file = new File(mCacheDir, filename);
       URLConnection connection;
-      Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-
-      if (bitmap != null) {
-         return bitmap;
+      
+      if (file.exists()) { 
+         return BitmapFactory.decodeFile(file.getPath());
       }
-
+         
       try {
          connection = new URL(url).openConnection();
-         bitmap = BitmapFactory.decodeStream(connection.getInputStream());
+        
+         Bitmap bitmap = BitmapFactory.decodeStream(connection.getInputStream());
+         
          addToWriteQueue(new StoredBitmap(bitmap, url));
 
          return bitmap;
